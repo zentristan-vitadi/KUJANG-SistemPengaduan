@@ -28,7 +28,7 @@ Route::get('/error-404', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
 
 
-    Route::get('/dashboard', function () {
+    Route::get('/', function () {
         return view('pages.dashboard.ecommerce', ['title' => 'E-commerce Dashboard']);
     })->middleware(['auth', 'verified'])->name('dashboard');
 
