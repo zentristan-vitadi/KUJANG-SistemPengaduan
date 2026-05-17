@@ -7,12 +7,17 @@ class MenuHelper
     public static function getMainNavItems()
     {
         return [
+            // [
+            //     'icon' => 'dashboard',
+            //     'name' => 'Dashboard',
+            //     'subItems' => [
+            //         ['name' => 'Ecommerce', 'path' => '/'],
+            //     ],
+            // ],
             [
                 'icon' => 'dashboard',
                 'name' => 'Dashboard',
-                'subItems' => [
-                    ['name' => 'Ecommerce', 'path' => '/'],
-                ],
+                'path' => '/'
             ],
             [
                 'icon' => 'calendar',
@@ -72,14 +77,14 @@ class MenuHelper
                     ['name' => 'Videos', 'path' => '/videos', 'pro' => false],
                 ],
             ],
-            [
-                'icon' => 'authentication',
-                'name' => 'Authentication',
-                'subItems' => [
-                    ['name' => 'Sign In', 'path' => '/signin', 'pro' => false],
-                    ['name' => 'Sign Up', 'path' => '/signup', 'pro' => false],
-                ],
-            ],
+            // [
+            //     'icon' => 'authentication',
+            //     'name' => 'Authentication',
+            //     'subItems' => [
+            //         ['name' => 'Sign In', 'path' => '/signin', 'pro' => false],
+            //         ['name' => 'Sign Up', 'path' => '/signup', 'pro' => false],
+            //     ],
+            // ],
         ];
     }
 

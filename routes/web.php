@@ -16,6 +16,10 @@ Route::get('/signup', function () {
     return view('pages.auth.signup', ['title' => 'Sign Up']);
 })->name('signup');
 
+Route::get('/register', function () {
+    return view('auth.register', ['title' => 'Register']);
+})->name('register');
+
 Route::get('/error-404', function () {
     return view('pages.errors.error-404', ['title' => 'Error 404']);
 })->name('error-404');
