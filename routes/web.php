@@ -94,6 +94,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/videos', function () {
         return view('pages.ui-elements.videos', ['title' => 'Videos']);
     })->name('videos');
+
+    Route::get('/pengaduan', function () {
+        return view('complaints.index', ['title' => 'Pengaduan']);
+    })->name('pengaduan');
 });
 
 require __DIR__ . '/auth.php';
