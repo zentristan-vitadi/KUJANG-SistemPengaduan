@@ -12,4 +12,14 @@ class response extends Model
         'admin_id',
         'response',
     ];
+
+    public function complaint()
+    {
+        return $this->belongsTo(complaint::class);
+    }
+
+    public function admin()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

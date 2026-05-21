@@ -30,4 +30,12 @@ class User extends Authenticatable
             'role',
         ];
     }
+    public function complaints()
+    {
+        return $this->hasMany(complaint::class, 'user_id');
+    }
+    public function response()
+    {
+        return $this->hasMany(response::class, 'admin_id');
+    }
 }

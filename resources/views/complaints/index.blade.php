@@ -187,7 +187,7 @@
     getStatusClass(status) {
         const classes = {
             'Success': 'bg-green-50 text-green-600 dark:bg-green-500/15 dark:text-green-500',
-            'Pending': 'bg-yellow-50 text-yellow-600 dark:bg-yellow-500/15 dark:text-orange-400',
+            'pending': 'bg-yellow-50 text-yellow-600 dark:bg-yellow-500/15 dark:text-orange-400',
             'Failed': 'bg-red-50 text-red-600 dark:bg-red-500/15 dark:text-red-500',
         };
         return classes[status] || '';
@@ -212,7 +212,12 @@
                 <form>
                     <div class="relative">
                         <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-                            <a href="" class="bg-blue-600 text-white ps-2 pe-3 py-2 rounded"><i class="fa-regular fa-square-plus" style="color: rgb(255, 255, 255);"></i>&nbsp;Tambah Pengaduan</a>
+                            @php
+                            $role = Auth::user()->role;
+                            if ($role == 'masyarakat') {
+                            @endphp
+                            <a href="{{ route('pengaduan.create') }}" class="bg-blue-600 text-white ps-2 pe-3 py-2 rounded"><i class="fa-regular fa-square-plus" style="color: rgb(255, 255, 255);"></i>&nbsp;Tambah Pengaduan</a>
+                            @php } @endphp
                         </div>
 
                     </div>
@@ -227,6 +232,7 @@
                     <thead>
                         <tr class="border-gray-200 border-y dark:border-gray-700">
                             <th scope="col" class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">No.</th>
+                            <th scope="col" class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">Foto</th>
                             <th scope="col" class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">Judul Pengaduan</th>
                             <th scope="col" class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">Pelapor</th>
                             <th scope="col" class="px-4 py-3 font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">Lokasi</th>
@@ -236,42 +242,83 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                        <template x-for="(transaction, index) in paginatedTransactions" :key="transaction.id">
-                            <tr>
-                                <td class="px-4 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-500 dark:text-gray-400" x-text="index + 1"></div>
-                                </td>
-                                <td class="py-4 whitespace-nowrap">
-                                    <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900 dark:text-white" x-text="transaction.name"></div>
-                                    </div>
-                                </td>
-                                <td class="px-4 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900 dark:text-white">Yuh</div>
-                                    <div class="text-sm text-gray-500 dark:text-gray-400" x-text="transaction.date"></div>
-                                </td>
-                                <td class="px-4 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900 dark:text-white">Pasir Kuda</div>
-                                    <!-- <div class="text-sm text-gray-500 dark:text-gray-400" x-text="transaction.price"></div> -->
-                                </td>
-                                <td class="px-4 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-500 dark:text-gray-400" x-text="transaction.category"></div>
-                                </td>
-                                <td class="px-4 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full" :class="getStatusClass(transaction.status)" x-text="transaction.status"></span>
-                                </td>
-                                <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                    <div class="flex justify-center relative">
-                                        <button type="button" class="text-red-600 rounded-lg px-3 py-2 bg-red-500">
-                                            <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
-                                        </button>
-                                        <button type="button" class="text-blue-600 rounded-lg px-3 py-2 mx-2 bg-blue-500">
-                                            <i class="fa-solid fa-edit" style="color: #ffffff;"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </template>
+                        @foreach ($laporanPengaduan as $comp)
+                        <tr>
+                            <td class="px-4 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-500 dark:text-gray-400">{{ $loop->iteration }}</div>
+                            </td>
+                            <td>
+                                <img src="{{ asset($comp->photo) }}"
+                                    alt="Foto Pengaduan"
+                                    class="w-20 h-12 object-cover rounded-lg">
+                            </td>
+                            <td class="py-4 whitespace-nowrap">
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $comp->title }}</div>
+                                    <p class="py-2font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">{{ $comp->description }}</p>
+                                </div>
+                            </td>
+
+                            <td class="px-4 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                    {{ $comp->user->name }}
+                                </div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400"></div>
+                            </td>
+                            <td class="px-4 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $comp->location }}</div>
+                                <!-- <div class="text-sm text-gray-500 dark:text-gray-400" x-text="transaction.price"></div> -->
+                            </td>
+                            <td class="px-4 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-500 dark:text-gray-400"> {{ $comp->created_at }}</div>
+                            </td>
+                            @php
+                            $statusClass = match($comp->status) {
+                            'pending' => 'bg-yellow-50 text-yellow-600 dark:bg-yellow-500/15 dark:text-orange-400',
+                            'diproses' => 'bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400',
+                            'selesai' => 'bg-green-50 text-green-600 dark:bg-green-500/15 dark:text-green-500',
+                            'ditolak' => 'bg-red-50 text-red-600 dark:bg-red-500/15 dark:text-red-500',
+                            default => 'bg-gray-100 text-gray-600',
+                            };
+                            @endphp
+
+                            <td class="px-4 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClass }}">
+                                    {{ $comp->status }}
+                                </span>
+                            </td>
+
+                            <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                <div class="flex justify-center relative">
+                                    @php
+                                    $role = Auth::user()->role;
+                                    if ($role == 'masyarakat') {
+                                    @endphp
+                                    <a href="{{ route('complaint.show', $comp->id) }}"
+                                        class="text-red-600 rounded-lg px-3 py-2 bg-red-500 inline-flex items-center">
+                                        <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
+                                    </a>
+                                    <button type="button" class="text-blue-600 rounded-lg px-3 py-2 mx-2 bg-blue-500">
+                                        <i class="fa-solid fa-edit" style="color: #ffffff;"></i>
+                                    </button>
+                                    @php } else { @endphp
+                                    <form id="delete-form-{{ $comp->id }}"
+                                        action="{{ route('complaint.destroy', $comp->id ) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="bg-red-600 px-2 py-2 rounded-lg" onclick="confirmDelete({{ $comp->id }})"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
+                                    </form>
+                                    <!-- <a href="{{ route('complaint.show', $comp->id) }}"
+                                        class="text-blue-600 rounded-lg px-3 py-2 bg-blue-500 inline-flex items-center">
+                                        <i class="fa-solid fa-eye" style="color: #ffffff;"></i>
+                                    </a> -->
+                                    @php } @endphp
+
+                                </div>
+                            </td>
+
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -310,5 +357,28 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Yakin ingin menghapus?',
+            text: "Data yang dihapus tidak bisa dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit form dengan id sesuai data
+                document.getElementById('delete-form-' +
+
+                    id).submit();
+            }
+        });
+    }
+</script>
 
 @endsection

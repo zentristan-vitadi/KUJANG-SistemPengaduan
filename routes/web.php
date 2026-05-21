@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ResponseController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes (no auth needed)
@@ -98,6 +101,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/pengaduan', function () {
         return view('complaints.index', ['title' => 'Pengaduan']);
     })->name('pengaduan');
+
+    Route::get('/pengaduan/create', function () {
+        return view('complaints.create', ['title' => 'Create Complaint']);
+    })->name('pengaduan.create');
+    
+    Route::get('/response', [ResponseController::class, 'index'])->name('response.index');
+
+    Route::get('/pengaduan', [ComplaintController::class, 'index'])->name('complaint.index');
+
+    Route::get('/complaints/create', [ComplaintController::class, 'tampil_data'])->name('complaint.create');
+    Route::post('/complaints/store', [ComplaintController::class, 'store'])->name('complaint.store');
+    Route::get('/complaints/show/{id}', [ComplaintController::class, 'show'])->name('complaint.show');
+    Route::delete('/complaints/destroy/{id}', [ComplaintController::class, 'destroy'])->name('complaint.destroy');
 });
 
 require __DIR__ . '/auth.php';
