@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+<x-common.page-breadcrumb pageTitle="Complaint Edit"/>
 <div class="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 rounded-lg px-4 py-10">
     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-md w-full max-w-md px-7 py-8">
         <div class="flex items-start gap-4 pb-5 mb-6 border-b border-gray-100 dark:border-gray-700">
@@ -23,8 +23,9 @@
 
 
         {{-- ── FORM BODY ── --}}
-        <form method="POST" action="{{route ('complaint.store')}}" enctype="multipart/form-data">
+        <form method="POST" action="{{route ('complaint.update', $complaint->id)}}" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <div class="flex flex-col gap-5">
 
                 {{-- Plain text input --}}
@@ -35,6 +36,7 @@
                     <input type="text"
                         name="title"
                         id="title"
+                        value="{{ $complaint->title }}"
                         placeholder="Tulis judul pengaduan Anda"
                         class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
                 </div>
@@ -46,6 +48,7 @@
                     <input type="text"
                         name="location"
                         id="location"
+                        value="{{ $complaint->location }}"
                         placeholder="Masukan Lokasi Kejadian"
                         class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
                 </div>
@@ -54,7 +57,8 @@
                     <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                         Description
                     </label>
-                    <textarea id="description" name="description" placeholder="Masukan Deskripsi..." type="text" rows="6"
+                    <textarea id="description" name="description" placeholder="Masukan Deskripsi..." type="text" rows="6" 
+                    value="{{ $complaint->description }}"
                         class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:shadow-focus-ring dark:focus:border-brand-800 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-0 focus:outline-hidden disabled:border-gray-100 disabled:bg-gray-50 disabled:placeholder:text-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:disabled:border-gray-800 dark:disabled:bg-white/[0.03] dark:disabled:placeholder:text-white/15"></textarea>
                 </div>
 

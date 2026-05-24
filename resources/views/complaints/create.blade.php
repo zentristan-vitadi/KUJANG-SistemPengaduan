@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+<x-common.page-breadcrumb pageTitle="Complaint Form"/>
 <div class="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 rounded-lg px-4 py-10">
     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-md w-full max-w-md px-7 py-8">
         <div class="flex items-start gap-4 pb-5 mb-6 border-b border-gray-100 dark:border-gray-700">

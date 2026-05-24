@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class complaint extends Model
+class Complaint extends Model
 {
     //
     protected $fillable = [
+        'user_id',
         'title',
         'description',
         'location',
@@ -22,6 +23,6 @@ class complaint extends Model
 
     public function response()
     {
-        return $this->hasMany(response::class, 'complaint_id');
+        return $this->hasOne(Response::class, 'complaint_id');
     }
 }

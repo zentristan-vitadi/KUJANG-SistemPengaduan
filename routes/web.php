@@ -27,17 +27,12 @@ Route::get('/error-404', function () {
     return view('pages.errors.error-404', ['title' => 'Error 404']);
 })->name('error-404');
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->name('dashboard');
-
 // Protected routes (must be logged in)
 Route::middleware(['auth', 'verified'])->group(function () {
 
-
-    Route::get('/', function () {
-        return view('pages.dashboard.ecommerce', ['title' => 'E-commerce Dashboard']);
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])
+        ->middleware(['auth', 'verified'])
+        ->name('dashboard');
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -98,21 +93,32 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('pages.ui-elements.videos', ['title' => 'Videos']);
     })->name('videos');
 
-    Route::get('/pengaduan', function () {
-        return view('complaints.index', ['title' => 'Pengaduan']);
-    })->name('pengaduan');
-
     Route::get('/pengaduan/create', function () {
         return view('complaints.create', ['title' => 'Create Complaint']);
     })->name('pengaduan.create');
-    
-    Route::get('/response', [ResponseController::class, 'index'])->name('response.index');
 
+
+
+
+
+    // RESPONSES ROUTES
+    Route::get('/responses', [ResponseController::class, 'index'])->name('responses.index');
+    Route::get('/responses/show/{id}', [ResponseController::class, 'show'])->name('responses.show');
+
+    Route::post('/responses/store/{id}', [ResponseController::class, 'store'])->name('responses.store');
+
+
+    // RESPONSE ROUTES END
+
+    // COMPlAINTS ROUTES
     Route::get('/pengaduan', [ComplaintController::class, 'index'])->name('complaint.index');
 
     Route::get('/complaints/create', [ComplaintController::class, 'tampil_data'])->name('complaint.create');
     Route::post('/complaints/store', [ComplaintController::class, 'store'])->name('complaint.store');
+
     Route::get('/complaints/show/{id}', [ComplaintController::class, 'show'])->name('complaint.show');
+    Route::put('/complaints/{id}', [ComplaintController::class, 'update'])->name('complaint.update');
+
     Route::delete('/complaints/destroy/{id}', [ComplaintController::class, 'destroy'])->name('complaint.destroy');
 });
 

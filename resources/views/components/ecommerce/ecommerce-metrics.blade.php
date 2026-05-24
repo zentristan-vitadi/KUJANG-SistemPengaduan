@@ -1,3 +1,10 @@
+@props([
+    'totalPengaduan' => 0,
+    'totalPending'   => 0,
+    'totalDitolak'   => 0,
+    'totalSelesai'   => 0,
+])
+
 <div class="grid grid-cols-4 gap-4 sm:grid-cols-4">
   <!-- Left Card: Total Pengaduan -->
   <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
@@ -19,7 +26,7 @@
       </div>
       <div>
         <span class="text-sm font-semibold text-gray-800 dark:text-white/90">Total Pengaduan</span>
-        <h4 class="mt-1 font-bold text-gray-800 text-title-sm dark:text-white/90">24</h4>
+        <h4 class="mt-1 font-bold text-gray-800 text-title-sm dark:text-white/90">{{ $totalPengaduan }}</h4>
         <span class="text-sm text-gray-500 dark:text-gray-400">Semua pengaduan</span>
       </div>
     </div>

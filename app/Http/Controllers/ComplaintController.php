@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\complaint;
-use App\Models\response;
+use App\Models\Complaint;
+use App\Models\Response;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Redirect;
 
 class ComplaintController extends Controller
 {
@@ -30,6 +33,33 @@ class ComplaintController extends Controller
     public function tampil_data()
     {
         return view('complaints.create', ['title' => 'Create Complaint']);
+    }
+
+    Public function update(Request $request, $id): RedirectResponse
+    {
+
+        $complaint = Complaint::findOrFail($id);
+        $complaint->title = $request->title;
+        $complaint->description = $request->description;
+        $complaint->location = $request->location;
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $filePath = public_path('/uploads/' . $filename);
+            $file->move(public_path('/uploads'), $filename);
+            $complaint->photo = '/uploads/' . $filename;
+        }
+        $complaint->save();
+
+        $complaint->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'location' => $request->location,
+            'photo' => $complaint->photo,
+        ]);
+
+        return redirect()->route('complaint.index')->with('success', 'Pengaduan berhasil diperbarui.');
     }
 
     public function store(Request $request)

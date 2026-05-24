@@ -1,12 +1,11 @@
 <?php
 
+// app/Models/Response.php
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Model;
 
-class response extends Model
+class Response extends Model  // Capital R
 {
-    //
     protected $fillable = [
         'complaint_id',
         'admin_id',
@@ -15,7 +14,7 @@ class response extends Model
 
     public function complaint()
     {
-        return $this->belongsTo(complaint::class);
+        return $this->belongsTo(Complaint::class); // Capital C
     }
 
     public function admin()

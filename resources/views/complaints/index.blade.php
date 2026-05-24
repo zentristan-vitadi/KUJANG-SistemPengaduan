@@ -250,12 +250,12 @@
                             <td>
                                 <img src="{{ asset($comp->photo) }}"
                                     alt="Foto Pengaduan"
-                                    class="w-20 h-12 object-cover rounded-lg">
+                                    class="w-18 h-12 object-cover rounded-lg">
                             </td>
                             <td class="py-4 whitespace-nowrap">
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $comp->title }}</div>
-                                    <p class="py-2font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">{{ $comp->description }}</p>
+                                    <p class="font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">{{ Str::limit($comp->description, 20) }}</p>
                                 </div>
                             </td>
 
@@ -263,6 +263,7 @@
                                 <div class="text-sm font-medium text-gray-900 dark:text-white">
                                     {{ $comp->user->name }}
                                 </div>
+                                <p class="py-2font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">{{ $comp->user->email }}</p>
                                 <div class="text-sm text-gray-500 dark:text-gray-400"></div>
                             </td>
                             <td class="px-4 py-4 whitespace-nowrap">
@@ -270,7 +271,7 @@
                                 <!-- <div class="text-sm text-gray-500 dark:text-gray-400" x-text="transaction.price"></div> -->
                             </td>
                             <td class="px-4 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-500 dark:text-gray-400"> {{ $comp->created_at }}</div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400"> {{ $comp->created_at->format('Y-m-d') }}</div>
                             </td>
                             @php
                             $statusClass = match($comp->status) {
@@ -294,23 +295,27 @@
                                     $role = Auth::user()->role;
                                     if ($role == 'masyarakat') {
                                     @endphp
-                                    <a href="{{ route('complaint.show', $comp->id) }}"
-                                        class="text-red-600 rounded-lg px-3 py-2 bg-red-500 inline-flex items-center">
-                                        <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
-                                    </a>
-                                    <button type="button" class="text-blue-600 rounded-lg px-3 py-2 mx-2 bg-blue-500">
-                                        <i class="fa-solid fa-edit" style="color: #ffffff;"></i>
-                                    </button>
-                                    @php } else { @endphp
                                     <form id="delete-form-{{ $comp->id }}"
                                         action="{{ route('complaint.destroy', $comp->id ) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" class="bg-red-600 px-2 py-2 rounded-lg" onclick="confirmDelete({{ $comp->id }})"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
                                     </form>
+                                    <a href="{{ route('complaint.show', $comp->id) }}"
+                                        class="text-blue-600 rounded-lg px-3 py-2 mx-2 bg-blue-500 inline-flex items-center">
+                                        <i class="fa-solid fa-edit" style="color: #ffffff;"></i>
+                                    </a>
+                                    @php } else { @endphp
+                                    <form id="delete-form-{{ $comp->id }}"
+                                        action="{{ route('complaint.destroy', $comp->id ) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="bg-red-600 px-2 py-2 rounded-lg" onclick="confirmDelete({{ $comp->id }})"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
+                                    </form> 
+                                    <a href="{{ route('responses.show', $comp->id) }}" class="bg-blue-600 px-2 py-2 mx-2 rounded-lg"><i class="fa-solid fa-comment" style="color: #ffffff;"></i></a>
                                     <!-- <a href="{{ route('complaint.show', $comp->id) }}"
                                         class="text-blue-600 rounded-lg px-3 py-2 bg-blue-500 inline-flex items-center">
-                                        <i class="fa-solid fa-eye" style="color: #ffffff;"></i>
+                                        <i class="fa-solid fa-eye" style="color: #ffffff;"></i>  
                                     </a> -->
                                     @php } @endphp
 
