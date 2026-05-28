@@ -68,7 +68,7 @@ class MenuHelper
                 ],
                 [
                     'name' => 'Pengaduan',
-                    'icon' => 'tables',
+                    'icon' => 'task',
                     'path' => '/pengaduan',
                 ],
                 [

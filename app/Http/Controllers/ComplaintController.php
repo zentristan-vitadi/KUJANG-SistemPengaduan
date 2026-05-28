@@ -23,19 +23,20 @@ class ComplaintController extends Controller
 
             // Admin dapat melihat semua laporan
             $laporanPengaduan = Complaint::with('user')->get();
-        } else { 
+        } else {
 
             // User hanya dapat melihat laporan yang mereka buat
             $laporanPengaduan = Complaint::with('user')->where('user_id', Auth::id())->get();
         }
         return view('complaints.index', compact('complaint', 'laporanPengaduan'));
     }
+  
     public function tampil_data()
     {
         return view('complaints.create', ['title' => 'Create Complaint']);
     }
 
-    Public function update(Request $request, $id): RedirectResponse
+    public function update(Request $request, $id): RedirectResponse
     {
 
         $complaint = Complaint::findOrFail($id);
@@ -101,5 +102,5 @@ class ComplaintController extends Controller
         $complaint = Complaint::findOrFail($id);
         $complaint->delete();
         return redirect()->route('complaint.index')->with('success', 'Pengaduan berhasil dihapus.');
-    }   
+    }
 }

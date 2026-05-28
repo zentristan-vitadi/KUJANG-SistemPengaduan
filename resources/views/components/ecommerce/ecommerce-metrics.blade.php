@@ -52,7 +52,7 @@
       </div>
       <div>
         <span class="text-sm font-semibold text-gray-800 dark:text-white/90">Pending</span>
-        <h4 class="mt-1 font-bold text-gray-800 text-title-sm dark:text-white/90">6</h4>
+        <h4 class="mt-1 font-bold text-gray-800 text-title-sm dark:text-white/90">{{ $totalPending }}</h4>
         <span class="text-sm text-gray-500 dark:text-yellow-300/70">Menunggu diproses</span>
       </div>
     </div>
@@ -68,7 +68,7 @@
       </div>
       <div>
         <span class="text-sm font-semibold text-gray-800 dark:text-white/90">Ditolak</span>
-        <h4 class="mt-1 font-bold text-gray-800 text-title-sm dark:text-white/90">6</h4>
+        <h4 class="mt-1 font-bold text-gray-800 text-title-sm dark:text-white/90">{{ $totalDitolak }}</h4>
         <span class="text-sm text-gray-500 dark:text-red-300/70">Pengaduan Ditolak</span>
       </div>
     </div>
@@ -84,7 +84,7 @@
       </div>
       <div>
         <span class="text-sm font-semibold text-gray-800 dark:text-white/90">Selesai</span>
-        <h4 class="mt-1 font-bold text-gray-800 text-title-sm dark:text-white/90">6</h4>
+        <h4 class="mt-1 font-bold text-gray-800 text-title-sm dark:text-white/90">{{ $totalSelesai }}</h4>
         <span class="text-sm text-gray-500 dark:text-green-300/70">Pengaduan Selesai</span>
       </div>
     </div>

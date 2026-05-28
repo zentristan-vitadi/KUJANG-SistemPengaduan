@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Complaint;
 use App\Models\Response;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,6 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // Base query — admin sees all, user sees only theirs
         $query = $user->role === 'admin'
             ? Complaint::query()
             : Complaint::where('user_id', $user->id);
@@ -24,11 +24,14 @@ class DashboardController extends Controller
         $totalDitolak   = (clone $query)->where('status', 'ditolak')->count();
         $totalSelesai   = (clone $query)->where('status', 'selesai')->count();
 
-        return view('dashboard', compact(
+        $laporanPengaduan = (clone $query)->with('user')->get();
+
+        return view('pages.dashboard.ecommerce', compact(
             'totalPengaduan',
             'totalPending',
             'totalDitolak',
-            'totalSelesai'
-        )+ ['title' => 'E-commerce Dashboard']);
+            'totalSelesai',
+            'laporanPengaduan'
+        ) + ['title' => 'E-commerce Dashboard']);
     }
 }

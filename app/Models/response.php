@@ -14,7 +14,7 @@ class Response extends Model  // Capital R
 
     public function complaint()
     {
-        return $this->belongsTo(Complaint::class); // Capital C
+        return $this->belongsTo(Complaint::class);
     }
 
     public function admin()

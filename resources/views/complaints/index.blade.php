@@ -311,7 +311,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" class="bg-red-600 px-2 py-2 rounded-lg" onclick="confirmDelete({{ $comp->id }})"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
-                                    </form> 
+                                    </form>
                                     <a href="{{ route('responses.show', $comp->id) }}" class="bg-blue-600 px-2 py-2 mx-2 rounded-lg"><i class="fa-solid fa-comment" style="color: #ffffff;"></i></a>
                                     <!-- <a href="{{ route('complaint.show', $comp->id) }}"
                                         class="text-blue-600 rounded-lg px-3 py-2 bg-blue-500 inline-flex items-center">

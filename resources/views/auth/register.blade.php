@@ -2,24 +2,23 @@
 
 @section('content')
 <div class="relative z-1 bg-white p-6 sm:p-0 dark:bg-gray-900">
-    <div class="flex h-screen w-full flex-col justify-center sm:p-0 lg:flex-row dark:bg-gray-900">
+    <div class="relative flex h-screen w-full flex-col justify-center sm:p-0 lg:flex-row"
+        style="background-image: url('{{ asset('images/login-image/TuguKujangBG.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;">
+
         <!-- Form -->
-        <div class="flex w-full flex-1 flex-col lg:w-1/2">
-            <div class="mx-auto w-full max-w-md pt-5 sm:py-10">
-                <a href="/"
-                    class="inline-flex items-center text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
-                    <svg class="stroke-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M12.7083 5L7.5 10.2083L12.7083 15.4167" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    Back to dashboard
-                </a>
-            </div>
+        <div class="flex flex-col lg:w-1/2 bg-white/75 dark:bg-gray-900/75 z-10">
             <div class="mx-auto flex w-full max-w-md flex-1 flex-col justify-center">
+                <x-common.common-grid-shape />
+                <img src="{{ asset('images/logo/logo-dark.png') }}" class="w-57 h-20 mb-10 mx-auto z-11 hidden dark:block">
+                <img class="dark:hidden w-57 h-20 mb-10 mx-auto z-11" src="{{ asset('images/logo/logo.png') }}" alt="Logo" width="170" height="70" />
                 <div class="mb-5 sm:mb-8">
-                    <h1 class="text-title-sm sm:text-title-md mb-2 font-semibold text-gray-800 dark:text-white/90">
+                    <h1 class="text-title-sm sm:text-title-md mb-2 text-center font-semibold text-gray-800 dark:text-white/90">
                         Sign Up
                     </h1>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center">
                         Enter your email and password to sign up!
                     </p>
                 </div>
@@ -27,6 +26,7 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
                         <div class="space-y-5">
+
                             <div>
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400" for="name" :value="__('Name')">
                                     Full Name<span class="text-error-500">*</span>
@@ -126,15 +126,6 @@
                             <a href="/login" class="text-brand-500 hover:text-brand-600 dark:text-brand-400">Sign In</a>
                         </p>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="bg-brand-950 relative hidden h-full w-full items-center lg:grid lg:w-1/2 dark:bg-white/5">
-            <div class="z-1 flex items-center justify-center">
-                <!-- ===== Common Grid Shape Start ===== -->
-                <x-common.common-grid-shape />
-                <div class="flex max-w-xs flex-col items-center">
-                    <!-- GAMBAR DISINI -->
                 </div>
             </div>
         </div>
