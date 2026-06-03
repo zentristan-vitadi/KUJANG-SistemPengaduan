@@ -19,7 +19,7 @@
                         Sign Up
                     </h1>
                     <p class="text-sm text-gray-500 dark:text-gray-400 text-center">
-                        Enter your email and password to sign up!
+                        Enter your Full Name, Email and Password to sign up!
                     </p>
                 </div>
                 <div>
@@ -43,6 +43,7 @@
                                     Email<span class="text-error-500">*</span>
                                 </label>
                                 <input id="email" type="email" name="email" :value="old('email')" required autocomplete="username"
+                                placeholder="Enter your email"
                                     class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
                                 <x-input-error :messages="$errors->get('email')" class="mt-2 text-sm text-red-500" />
                             </div>
@@ -89,7 +90,7 @@
                                         <div class="relative">
                                             <input type="checkbox" id="checkboxLabelOne" class="sr-only" @change="checkboxToggle = !checkboxToggle" />
                                             <div :class="checkboxToggle ? 'border-brand-500 bg-brand-500' :
-                                                    'bg-transparent border-gray-300 dark:border-gray-700'"
+                                                    'bg-transparent border-white dark:border-gray-700'"
                                                 class="mr-3 flex h-5 w-5 items-center justify-center rounded-md border-[1.25px]">
                                                 <span :class="checkboxToggle ? '' : 'opacity-0'">
                                                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">

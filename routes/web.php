@@ -4,12 +4,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ResponseController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes (no auth needed)
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('landing');
 
 Route::get('/signin', function () {
     return view('pages.auth.signin', ['title' => 'Sign In']);
@@ -30,7 +31,7 @@ Route::get('/error-404', function () {
 // Protected routes (must be logged in)
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/', [DashboardController::class, 'index'])
+    Route::get('/dashboard', [DashboardController::class, 'index'])
         ->middleware(['auth', 'verified'])
         ->name('dashboard');
 
@@ -98,7 +99,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('pengaduan.create');
 
 
-
+    // REPORTS ROUTES
+    Route::get('/reports', [ReportController::class, 'index'])
+        ->middleware(['auth', 'verified'])
+        ->name('reports.index');
 
 
     // RESPONSES ROUTES
@@ -108,7 +112,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/responses/store/{id}', [ResponseController::class, 'store'])->name('responses.store');
 
 
-    // RESPONSE ROUTES END
+
 
     // COMPlAINTS ROUTES
     Route::get('/pengaduan', [ComplaintController::class, 'index'])->name('complaint.index');

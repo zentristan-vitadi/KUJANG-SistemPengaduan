@@ -22,6 +22,7 @@ class DashboardController extends Controller
         $totalPengaduan = (clone $query)->count();
         $totalPending   = (clone $query)->where('status', 'pending')->count();
         $totalDitolak   = (clone $query)->where('status', 'ditolak')->count();
+        $totalDiproses  = (clone $query)->where('status', 'diproses')->count();
         $totalSelesai   = (clone $query)->where('status', 'selesai')->count();
 
         $laporanPengaduan = (clone $query)->with('user')->get();
@@ -30,6 +31,7 @@ class DashboardController extends Controller
             'totalPengaduan',
             'totalPending',
             'totalDitolak',
+            'totalDiproses',
             'totalSelesai',
             'laporanPengaduan'
         ) + ['title' => 'E-commerce Dashboard']);

@@ -16,12 +16,12 @@ class ResponseController extends Controller
         $user = Auth::user();
 
         $complaints = Complaint::with(['user', 'response'])
-            ->where('status', 'selesai')
+            ->where('status', 'diproses')
             ->when($user->role !== 'admin', function ($q) use ($user) {
                 $q->where('user_id', $user->id);
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(5);
 
         return view('responses.index', compact('complaints'));
     }
@@ -32,19 +32,28 @@ class ResponseController extends Controller
     }
     public function store(Request $request, $id)
     {
+        
+        if (Auth::user()->role !== 'admin') {
+            abort(403, 'Unauthorized');
+        }
         $request->validate([
             'response' => 'required|string|min:5',
+            'status'   => 'required|in:diproses,ditolak,selesai',
         ]);
 
         $complaint = Complaint::findOrFail($id);
 
-        Response::create([
-            'complaint_id' => $complaint->id,
-            'admin_id'     => Auth::id(),
-            'response'     => $request->response,
-        ]);
+        // Update or create the response
+        Response::updateOrCreate(
+            ['complaint_id' => $complaint->id],
+            [
+                'admin_id' => Auth::id(),
+                'response' => $request->response,
+            ]
+        );
 
-        $complaint->update(['status' => 'selesai']);
+        // Update the complaint status from the dropdown
+        $complaint->update(['status' => $request->status]);
 
         return redirect()->route('complaint.index')
             ->with('success', 'Respon berhasil dikirim.');

@@ -30,7 +30,7 @@ class ComplaintController extends Controller
         }
         return view('complaints.index', compact('complaint', 'laporanPengaduan'));
     }
-  
+    
     public function tampil_data()
     {
         return view('complaints.create', ['title' => 'Create Complaint']);
@@ -100,7 +100,15 @@ class ComplaintController extends Controller
     public function destroy($id)
     {
         $complaint = Complaint::findOrFail($id);
-        $complaint->delete();
-        return redirect()->route('complaint.index')->with('success', 'Pengaduan berhasil dihapus.');
+
+        if (Auth::user()->role === 'admin') {
+            // Admin "deleting" = rejecting
+            $complaint->update(['status' => 'ditolak']);
+            return redirect()->back()->with('success', 'Pengaduan berhasil ditolak.');
+        } else {
+            // Masyarakat deleting = actual delete
+            $complaint->delete();
+            return redirect()->back()->with('success', 'Pengaduan berhasil dihapus.');
+        }
     }
 }

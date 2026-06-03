@@ -1,6 +1,7 @@
 @extends('layouts.fullscreen-layout')
 
 @section('content')
+
 <div class="relative z-1 bg-white p-6 sm:p-0 dark:bg-gray-900">
     <div class="relative flex h-screen w-full flex-col justify-center sm:p-0 lg:flex-row"
      style="background-image: url('{{ asset('images/login-image/TuguKujangBG.jpg') }}');
@@ -34,7 +35,8 @@
                                         Email<span class="text-error-500">*</span>
                                     </label>
                                     <input id="email" type="email" name="email" :value="old('email')" required autofocus autocomplete="username"
-                                        class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
+                                    placeholder="Enter your Email"
+                                        class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-light-900 px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
                                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                 </div>
                                 <!-- Password -->
@@ -44,6 +46,7 @@
                                     </label>
                                     <div x-data="{ showPassword: false }" class="relative">
                                         <input :type="showPassword ? 'text' : 'password'" id="password" type="password" name="password" required autocomplete="current-password"
+                                        placeholder="Enter your Password"
                                             class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pr-11 pl-4 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
                                         <span @click="showPassword = !showPassword"
                                             class="absolute top-1/2 right-4 z-30 -translate-y-1/2 cursor-pointer text-gray-500 dark:text-gray-400">
@@ -67,7 +70,7 @@
                                             <div class="relative">
                                                 <input type="checkbox" id="checkboxLabelOne" class="sr-only" @change="checkboxToggle = !checkboxToggle" />
                                                 <div :class="checkboxToggle ? 'border-brand-500 bg-brand-500' :
-                                                        'bg-transparent border-gray-300 dark:border-gray-700'"
+                                                        'bg-transparent border-white dark:border-gray-700'"
                                                     class="mr-3 flex h-5 w-5 items-center justify-center rounded-md border-[1.25px]">
                                                     <span :class="checkboxToggle ? '' : 'opacity-0'">
                                                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -79,9 +82,6 @@
                                             Keep me logged in
                                         </label>
                                     </div>
-                                    <a href="/reset-password" class="text-brand-500 hover:text-brand-600 dark:text-brand-400 text-sm">
-                                        Forgot password?
-                                    </a>
                                 </div>
                                 <!-- Button -->
                                 <div>
