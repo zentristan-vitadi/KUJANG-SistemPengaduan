@@ -20,7 +20,7 @@ class ReportController extends Controller
                 $q->where('user_id', $user->id);
             })
             ->latest()
-            ->paginate(5);
+            ->paginate(15);
 
         return view('reports.index', compact('complaints'));
     }

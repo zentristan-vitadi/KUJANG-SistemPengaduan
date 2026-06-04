@@ -51,7 +51,7 @@
 
             <div>
                 <a class="text-blue-500 font-medium rounded-lg px-3 py-2 mx-2 inline-flex items-center" href="{{ route('login') }}">Login</a>
-                <a class="text-blue-500 font-medium rounded-lg px-3 py-2 mx-2 border-1 border-blue-500 inline-flex items-center" href="{{ route('register') }}">Register</a>
+                <a class="text-white font-medium bg-blue-500 rounded-lg px-3 py-2 mx-2 border-1 border-blue-500 inline-flex items-center" href="{{ route('register') }}">Register</a>
             </div>
         </div>
     </header>
@@ -105,10 +105,10 @@
                     <div class="col-xl-6 aos-init aos-animate" data-aos="fade-right" data-aos-delay="200">
                         <div class="about-images-wrapper">
                             <div class="image-main">
-                                <img src="assets/img/about/about-5.webp" alt="Business meeting" class="img-fluid">
+                                <img src="assets/img/about/about-5.jpg" alt="Business meeting" class="img-fluid">
                             </div>
                             <div class="image-offset">
-                                <img src="assets/img/about/about-square-3.webp" alt="Detail shot" class="img-fluid">
+                                <img src="assets/img/about/about-square-3.jpg" alt="Detail shot" class="img-fluid">
                             </div>
                             <div class="experience-badge">
                                 <span class="years purecounter" data-purecounter-start="0" data-purecounter-end="5" data-purecounter-duration="1">5</span>

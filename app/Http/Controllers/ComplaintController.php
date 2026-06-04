@@ -15,22 +15,39 @@ use Illuminate\Support\Facades\Redirect;
 class ComplaintController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $complaint = Complaint::all();
+        $search = $request->get('q');
         $role = Auth::user()->role;
+
+        $complaint = Complaint::all();
+
         if ($role == 'admin') {
-
-            // Admin dapat melihat semua laporan
-            $laporanPengaduan = Complaint::with('user')->get();
+            $laporanPengaduan = Complaint::with('user')
+                ->when($search, fn($q) => $q->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhere('location', 'like', "%{$search}%");
+                }))
+                ->latest()
+                ->paginate(10)
+                ->appends(request()->query());
         } else {
-
-            // User hanya dapat melihat laporan yang mereka buat
-            $laporanPengaduan = Complaint::with('user')->where('user_id', Auth::id())->get();
+            $laporanPengaduan = Complaint::with('user')
+                ->where('user_id', Auth::id())
+                ->when($search, fn($q) => $q->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhere('location', 'like', "%{$search}%");
+                }))
+                ->latest()
+                ->paginate(10)
+                ->appends(request()->query());
         }
-        return view('complaints.index', compact('complaint', 'laporanPengaduan'));
+
+        return view('complaints.index', compact('complaint', 'laporanPengaduan', 'search'));
     }
-    
+
     public function tampil_data()
     {
         return view('complaints.create', ['title' => 'Create Complaint']);

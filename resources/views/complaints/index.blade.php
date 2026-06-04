@@ -2,6 +2,17 @@
 
 @section('content')
 
+@php
+function highlight($text, $search) {
+if (!$search) return e($text);
+return preg_replace(
+'/(' . preg_quote($search, '/') . ')/i',
+'<mark class="bg-yellow-200 dark:bg-yellow-500/30 text-inherit rounded px-0.5">$1</mark>',
+e($text)
+);
+}
+@endphp
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://kit.fontawesome.com/ef1f748698.js" crossorigin="anonymous"></script>
 <x-common.page-breadcrumb pageTitle="Pengaduan" />
@@ -253,10 +264,13 @@
                                     class="w-18 h-12 object-cover rounded-lg">
                             </td>
                             <td class="py-4 whitespace-nowrap">
-                                <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $comp->title }}</div>
-                                    <p class="font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">{{ Str::limit($comp->description, 20) }}</p>
+                                {{-- was: {{ $comp->title }} and {{ Str::limit($comp->description, 20) }} --}}
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                    {!! highlight($comp->title, $search) !!}
                                 </div>
+                                <p class="font-normal text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                                    {!! highlight(Str::limit($comp->description, 20), $search) !!}
+                                </p>
                             </td>
 
                             <td class="px-4 py-4 whitespace-nowrap">
@@ -267,7 +281,10 @@
                                 <div class="text-sm text-gray-500 dark:text-gray-400"></div>
                             </td>
                             <td class="px-4 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $comp->location }}</div>
+                                {{-- was: {{ $comp->location }} --}}
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                    {!! highlight($comp->location, $search) !!}
+                                </div>
                                 <!-- <div class="text-sm text-gray-500 dark:text-gray-400" x-text="transaction.price"></div> -->
                             </td>
                             <td class="px-4 py-4 whitespace-nowrap">
@@ -342,9 +359,8 @@
 
         Swal.fire({
             title: isAdmin ? 'Yakin ingin menolak?' : 'Yakin ingin menghapus?',
-            text: isAdmin 
-                ? 'Pengaduan ini akan ditolak.' 
-                : 'Data yang dihapus tidak bisa dikembalikan!',
+            text: isAdmin ?
+                'Pengaduan ini akan ditolak.' : 'Data yang dihapus tidak bisa dikembalikan!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
